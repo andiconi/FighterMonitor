@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import '../../App.css'
 import {Link} from "react-router-dom"
 import * as L from 'leaflet';
-import 'leaflet-tilelayer-mbtiles-ts';
+import 'leaflet/dist/leaflet.css';
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
+//import 'leaflet-tilelayer-mbtiles-ts';
 
 //Number(firefighter.latitude)
 //Number(firefighter.longitude)
@@ -11,24 +14,45 @@ import 'leaflet-tilelayer-mbtiles-ts';
 // id: 'mapbox/streets-v11',
 // accessToken: 'pk.eyJ1IjoiYndlaW5lbCIsImEiOiJjbDA4bDcwb3UwNGlhM2ludWJzYW9uZXB3In0.GhmtfldqX0K-7K2ZmYbI3A'
 
-export const Card = ({listOfFighters})=> {
-    function drawMap(firefighter) {
-      var map = L.map(`map${firefighter.id}`).setView([39.68014, -75.75125], 13);
-      L.tileLayer.mbTiles('../../../maps/maptiler-osm-2017-07-03-v3.6.1-us_delaware.mbtiles', {
+    //   L.tileLayer.mbTiles('../../../maps/maptiler-osm-2017-07-03-v3.6.1-us_delaware.mbtiles', {
 
-    }).addTo(map);
-  
+    // }).addTo(map);
+
+    export function drawMap(firefighter) {
+      var map = L.map(`map${firefighter.id}`).setView([Number(firefighter.latitude),Number(firefighter.longitude)], 18);
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoiYndlaW5lbCIsImEiOiJjbDA4bDcwb3UwNGlhM2ludWJzYW9uZXB3In0.GhmtfldqX0K-7K2ZmYbI3A'
+        }).addTo(map);
+
+        var marker = L.marker([Number(firefighter.latitude), Number(firefighter.longitude)],{
+          color: 'red'
+        }).addTo(map);
     }
 
-  useEffect(() => {
-    // const loadMaps = async () => {
-    //   const data = await fetch('/api/');
-    //   const json = await data.json();
-    //   console.log(json);
+export const Card = ({listOfFighters})=> {
 
-      
-    // }
-    // loadMaps();
+
+  useEffect(() => {
+    //to make marker appear some bug but this works fine
+    const L = require("leaflet");
+
+    delete L.Icon.Default.prototype._getIconUrl;
+
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+      iconUrl: require("leaflet/dist/images/marker-icon.png"),
+      shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+    });
+
+
+
+
+
     listOfFighters.forEach((firefighter) => {
       drawMap(firefighter)
     })

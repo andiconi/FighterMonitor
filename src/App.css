@@ -52,7 +52,7 @@
   text-decoration: underline;
 }
 .map {
-position: sticky; 
+position: relative; 
 width: 100%;
 height: 60%;
 display: block;

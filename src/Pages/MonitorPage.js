@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {Card} from '../Components/Card/card';
+import {Card, drawMap} from '../Components/Card/card';
 import { Form } from '../Components/Form/form';
-
 
 export const MonitorPage = ()=> {
     const [fireFighter, setFighter] = useState([])
@@ -69,6 +68,7 @@ export const MonitorPage = ()=> {
             setaddWeight('')
             setaddSex('')
             getLatestFighters()
+            drawMap(message)
             })
     }
 
