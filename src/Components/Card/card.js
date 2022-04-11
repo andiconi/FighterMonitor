@@ -1,5 +1,5 @@
 import React from "react";
-import {Map} from "../Map/Map"
+import {MapComp} from "../Map/MapComp"
 import '../../App.css'
 import {Link} from "react-router-dom"
 
@@ -8,7 +8,7 @@ export const Card = ({listOfFighters})=> {
     <div className="cards">
         {listOfFighters.map((fireFighter) => (
           <div className="card" key = {fireFighter.id}>
-            <Map Fighter={fireFighter}/>
+            <MapComp Fighter={fireFighter}/>
             <div className="card__content" id="card1_content">
               <p>
                 Hydration: {fireFighter.hydration}%<br />

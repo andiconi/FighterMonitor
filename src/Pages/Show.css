@@ -26,11 +26,13 @@
     font-size: 0.8em;
   }
   .fullMap {
-  position: sticky; 
-  width: 100%;
-  height: 60%;
-  display: block;
-  }
+    position: relative; 
+    width: 100%;
+    height: 60%;
+    display: block;
+    overflow: hidden;
+    z-index: 0;
+}
   #Back{
     position: fixed;
     top: 16px;

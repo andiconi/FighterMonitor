@@ -4,7 +4,7 @@ import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 
-
+//this is to show full map on second page
 
 //Number(firefighter.latitude)
 //Number(firefighter.longitude)
@@ -19,9 +19,11 @@ import 'leaflet/dist/leaflet.css';
 
 
 
-export const Map = ({Fighter})=> {
-    function drawMap() {
-        var map = L.map(`map${Fighter.id}`).setView([Number(Fighter.latitude),Number(Fighter.longitude)], 18);
+
+export const FullMap = ({Fighter})=> {
+
+    function drawFullMap() {
+        var fullMap = L.map(`fullmap${Fighter.id}`).setView([Number(Fighter.latitude),Number(Fighter.longitude)], 18);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
           //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 18,
@@ -29,11 +31,11 @@ export const Map = ({Fighter})=> {
           tileSize: 512,
           zoomOffset: -1,
           accessToken: 'pk.eyJ1IjoiYndlaW5lbCIsImEiOiJjbDA4bDcwb3UwNGlhM2ludWJzYW9uZXB3In0.GhmtfldqX0K-7K2ZmYbI3A'
-          }).addTo(map);
+          }).addTo(fullMap);
     
           var marker = L.marker([Number(Fighter.latitude), Number(Fighter.longitude)],{
             color: 'red'
-          }).addTo(map);
+          }).addTo(fullMap);
     }
 useEffect(() => {
     //to make marker appear some bug but this works fine
@@ -46,12 +48,12 @@ useEffect(() => {
         iconUrl: require("leaflet/dist/images/marker-icon.png"),
         shadowUrl: require("leaflet/dist/images/marker-shadow.png")
     });
-    drawMap();
+    drawFullMap();
 },[])
 
 
 
     return(
-        <div className="map" id={Fighter.map} key = {Fighter.id}></div>
+        <div className="FullMap" id= {`full${Fighter.map}`} key = {Fighter.id}></div>
     )
 }
