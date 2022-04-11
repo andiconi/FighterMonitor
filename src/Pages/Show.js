@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './Show.css';
+import 'leaflet/dist/leaflet.css';
+import {Map} from "../Components/Map/Map"
 import {
     useParams,
     Link
@@ -32,15 +34,13 @@ export const Show = () => {
 
     return(
         <div>
-            {fighter.length > 0 && fighter.map(data => 
-            
-            
+          {fighter.length > 0 && fighter.map(data => 
             <div className="fullCard">
                 <Link to = {`/`} id="Back">
                   Back
                 </Link>
-            <div className="fullMap" ></div>
-            <div className="fullCard__content" id="fullcard1_content">
+            <Map Fighter={data}/>
+            <div className="fullCard__content" id="fullcard1_content" key = {data.id}>
               <p>
                 {data.name}<br />
                 Hydration: {data.hydration}%<br />
@@ -53,12 +53,7 @@ export const Show = () => {
               </p>
             </div>
           </div>
-            
-            
-            
-            
-            
-            )}
+          )}
         </div>
     )
 

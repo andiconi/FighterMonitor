@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import {Card, drawMap} from '../Components/Card/card';
+import {Card} from '../Components/Card/card';
 import { Form } from '../Components/Form/form';
-
+//import Map, {drawMap} from '../Components/Map/Map'
 export const MonitorPage = ()=> {
     const [fireFighter, setFighter] = useState([])
     const [addFighter, setaddFighter] = useState('')
@@ -43,7 +43,9 @@ export const MonitorPage = ()=> {
             if(response.ok){
                 return response.json()
             }
-        }).then(data => setFighter(data))
+        }).then(data => {
+            setFighter(data);
+        })
     }
 
     const handleFormSubmit = () => {
@@ -68,7 +70,6 @@ export const MonitorPage = ()=> {
             setaddWeight('')
             setaddSex('')
             getLatestFighters()
-            drawMap(message)
             })
     }
 
