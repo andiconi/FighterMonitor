@@ -17,10 +17,10 @@ import 'leaflet/dist/leaflet.css';
 
     // }).addTo(map);
 
-
+const markers = ["markers"];
 
 export const MapComp = ({Fighter})=> {
-    var marker;
+    
     function drawMap() {
         var map = L.map(`map${Fighter.id}`).setView([Number(Fighter.latitude),Number(Fighter.longitude)], 18);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -31,14 +31,18 @@ export const MapComp = ({Fighter})=> {
           zoomOffset: -1,
           accessToken: 'pk.eyJ1IjoiYndlaW5lbCIsImEiOiJjbDA4bDcwb3UwNGlhM2ludWJzYW9uZXB3In0.GhmtfldqX0K-7K2ZmYbI3A'
           }).addTo(map);
-    
-          marker = L.marker([Number(Fighter.latitude), Number(Fighter.longitude)],{
+          var marker;
+          markers.push(marker);
+
+          markers[Fighter.id] = L.marker([Number(Fighter.latitude), Number(Fighter.longitude)],{
             color: 'red'
           }).addTo(map);
     }
 
     function updateMap(){
-        marker.setLatLng([Number(Fighter.latitude),Number(Fighter.longitude)]);
+        markers[Fighter.id].setLatLng(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude))).update();
+        //marker.setLatLng(L.LatLng(Number(Fighter.latitude), Number(Fighter.longitude))).update();
+    
     }
 useEffect(() => {
     //to make marker appear some bug but this works fine
@@ -52,13 +56,11 @@ useEffect(() => {
         shadowUrl: require("leaflet/dist/images/marker-shadow.png")
     });
     drawMap();
-    const interval = setInterval(() => {
-        updateMap();
-      }, 1000);
-      return () => clearInterval(interval);
 },[])
 
-
+useEffect(() => {
+    updateMap();
+},[Fighter])
 
     return(
         <div className="map" id={Fighter.map} key = {Fighter.id}></div>
