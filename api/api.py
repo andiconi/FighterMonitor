@@ -103,7 +103,7 @@ class LoRaRcvCont(LoRa):
             newstr = format_data(payload)
             write_to_csv(payload)
             print(newstr)
-            fighter1 = Fighter.query.get(1) #here is where if we had an id number we could change multiple fighters
+            fighter1 = Fighter.query.get(int(newstr[0])) #here is where if we had an id number we could change multiple fighters
             fighter1.hydration = impCalc(fighter1.age, fighter1.height, fighter1.weight, fighter1.sex, newstr[5]) 
             fighter1.oxygen = newstr[4]
             fighter1.heartrate = newstr[3]

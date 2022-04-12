@@ -18,6 +18,7 @@ import 'leaflet/dist/leaflet.css';
     // }).addTo(map);
 
 const markers = ["markers"];
+const maps = ["maps"];
 
 export const MapComp = ({Fighter})=> {
     
@@ -31,6 +32,7 @@ export const MapComp = ({Fighter})=> {
           zoomOffset: -1,
           accessToken: 'pk.eyJ1IjoiYndlaW5lbCIsImEiOiJjbDA4bDcwb3UwNGlhM2ludWJzYW9uZXB3In0.GhmtfldqX0K-7K2ZmYbI3A'
           }).addTo(map);
+          maps.push(map);
           var marker;
           markers.push(marker);
 
@@ -41,6 +43,7 @@ export const MapComp = ({Fighter})=> {
 
     function updateMap(){
         markers[Fighter.id].setLatLng(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude))).update();
+        maps[Fighter.id].setView(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude)), 18);
         //marker.setLatLng(L.LatLng(Number(Fighter.latitude), Number(Fighter.longitude))).update();
     
     }
