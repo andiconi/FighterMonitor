@@ -3,22 +3,10 @@ import '../../App.css'
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-
-//this is to show full map on second page
-
-//Number(firefighter.latitude)
-//Number(firefighter.longitude)
-// attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-// maxZoom: 18,
-// id: 'mapbox/streets-v11',
-// accessToken: 'pk.eyJ1IjoiYndlaW5lbCIsImEiOiJjbDA4bDcwb3UwNGlhM2ludWJzYW9uZXB3In0.GhmtfldqX0K-7K2ZmYbI3A'
-
-    //   L.tileLayer.mbTiles('../../../maps/maptiler-osm-2017-07-03-v3.6.1-us_delaware.mbtiles', {
-
-    // }).addTo(map);
-
-
-
+/*
+This component is to show the full histogram of where a firefighter has been. this component is not finished and requires adding the code snippet in card.js
+along with much more work to make a histogram. Currently just a map with marker should display but it is not working
+*/
 
 export const FullMap = ({Fighter})=> {
 

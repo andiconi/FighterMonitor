@@ -3,34 +3,21 @@ import '../../App.css'
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-
-
-
-//Number(firefighter.latitude)
-//Number(firefighter.longitude)
-// attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-// maxZoom: 18,
-// id: 'mapbox/streets-v11',
-// accessToken: 'pk.eyJ1IjoiYndlaW5lbCIsImEiOiJjbDA4bDcwb3UwNGlhM2ludWJzYW9uZXB3In0.GhmtfldqX0K-7K2ZmYbI3A'
-
-    //   L.tileLayer.mbTiles('../../../maps/maptiler-osm-2017-07-03-v3.6.1-us_delaware.mbtiles', {
-
-    // }).addTo(map);
-
 const markers = ["markers"];
 const maps = ["maps"];
+
+/*
+This component loads the maps from the tile server
+*/
+
 
 export const MapComp = ({Fighter})=> {
     
     function drawMap() {
         var map = L.map(`map${Fighter.id}`).setView([Number(Fighter.latitude),Number(Fighter.longitude)], 18);
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-          //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        L.tileLayer('http://localhost:8080/styles/osm-bright/{z}/{x}/{y}.png', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           maxZoom: 18,
-          id: 'mapbox/streets-v11',
-          tileSize: 512,
-          zoomOffset: -1,
-          accessToken: 'pk.eyJ1IjoiYndlaW5lbCIsImEiOiJjbDA4bDcwb3UwNGlhM2ludWJzYW9uZXB3In0.GhmtfldqX0K-7K2ZmYbI3A'
           }).addTo(map);
           maps.push(map);
           var marker;
@@ -43,10 +30,10 @@ export const MapComp = ({Fighter})=> {
 
     function updateMap(){
         markers[Fighter.id].setLatLng(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude))).update();
-        maps[Fighter.id].setView(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude)), 18);
-        //marker.setLatLng(L.LatLng(Number(Fighter.latitude), Number(Fighter.longitude))).update();
-    
+        maps[Fighter.id].setView(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude)));
     }
+
+//This useEffect creates the maps once on boot to avoid "Map container already initialized" errors
 useEffect(() => {
     //to make marker appear some bug but this works fine
     const L = require("leaflet");
@@ -61,6 +48,7 @@ useEffect(() => {
     drawMap();
 },[])
 
+//This useEffect updates the markers position when a firefighter is updated
 useEffect(() => {
     updateMap();
 },[Fighter])

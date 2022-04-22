@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import {Card} from '../Components/Card/card';
 import { Form } from '../Components/Form/form';
-//import Map, {drawMap} from '../Components/Map/Map'
+
+/*
+This Page is the main page with ll the cards. this is alos where firefighters are updated
+*/
 export const MonitorPage = ()=> {
     const [fireFighter, setFighter] = useState([])
     const [addFighter, setaddFighter] = useState('')

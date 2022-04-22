@@ -6,13 +6,14 @@ import {
     Link
   } from 'react-router-dom'
 
+/*
+This component is for the future histogram feature. the code snippet in card.js is required to use this. Currenlty this will display all vitals
+of a single firefighter
+*/
+
 export const Show = () => {
     const{id} = useParams()
     const [fighter, setfighter] = useState([])
-
-    // useEffect(()=> {
-    //     fetch(`/api/${id}`).then(response => response.json()).then(data => setfighter(data))
-    // }, [id])
 
     useEffect(()=>{
       const getLatestFighters = () => {

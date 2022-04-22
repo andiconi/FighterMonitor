@@ -2,6 +2,14 @@ import React from "react";
 import Popup from "./Popup";
 import {useState} from 'react'
 import '../../App.css'
+
+/*
+This component handles the user input to store firefighters. uses backend requests to create new fighters.
+
+Form is contained within the popup component
+*/
+
+
 export const Form = ({userInput, userAge, userWeight, userHeight, userSex, onFormAge, onFormHeight, onFormWeight, onFormSex,  onFormChange, onFormSubmit})=> {
 
     const handleChange =(event) => {
@@ -44,10 +52,10 @@ export const Form = ({userInput, userAge, userWeight, userHeight, userSex, onFor
             <label htmlFor = "age">Age</label>
             <input id = "addinput"  type="text"required value = {userAge} onChange={handleAge}name ="age"></input> <br/><br/>
 
-            <label htmlFor = "height">Height</label>
+            <label htmlFor = "height">Height (in)</label>
             <input id = "addinput" type="text"required value = {userHeight} onChange={handleHeight}name ="height"></input> <br/><br/>
 
-            <label htmlFor = "weight">Weight</label>
+            <label htmlFor = "weight">Weight (lbs)</label>
             <input id = "addinput"  type="text"required value = {userWeight} onChange={handleWeight}name ="weight"></input> <br/><br/>
 
             <label htmlFor = "sex">Sex</label>

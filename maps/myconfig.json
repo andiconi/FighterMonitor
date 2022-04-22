@@ -1,0 +1,41 @@
+{
+    "options": {
+      "paths": {
+        "root": "/data",
+        "fonts": "fonts",
+        "sprites": "sprites",
+        "styles": "styles",
+        "mbtiles": ""
+      },
+      "frontPage": true,
+      "formatQuality": {
+        "jpeg": 80,
+        "webp": 90
+      },
+      "maxScaleFactor": 3,
+      "maxSize": 2048,
+      "pbfAlias": "pbf",
+      "serveAllFonts": false,
+      "serveAllStyles": false,
+      "serveStaticMaps": true,
+      "tileMargin": 0
+    },
+    "styles": {
+      "my-style": {
+        "style": "style.json",
+        "tilejson": {
+          "bounds": [
+            10,
+            55,
+            12,
+            60
+          ]
+        }
+      }
+    },
+    "data": {
+      "tileset": {
+        "mbtiles": "maptiler-osm-2017-07-03-v3.6.1-north-america_us.mbtiles"
+      }
+    }
+  }

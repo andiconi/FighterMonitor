@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# FireFighter Monitor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project connects a LoRa recieve script for the raspberry pi with a React GUI to display the location and vitals of firefighters or other first responders.
 
-## Available Scripts
+## Install
 
-In the project directory, you can run:
+In your desired directory, you can run:
+### `git clone https://github.com/andiconi/FighterMonitor.git` 
+### `cd FighterMonitor`
 
+To install nvm and npm:
+nvm: 
+### `wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash`
+Restart the terminal and then run:
+### `nvm install v16.14.2`
+### `cd maps`
+This will install the necessary npm versions the gui
+### `npm install`
+
+## Installing the Virtual Enviorment
+
+From FighterMonitor:
+### `cd api`
+### `sudo pip install virtualenv`
+To activate the virtual enviorment:
+### `source ./venv/bin/activate`
+
+## Installing Necessary Libraries into Venv
+In the api folder activate the venv with:
+### `source ./venv/bin/activate`
+Then install:
+### `pip install -U Flask-SQLAlchemy`
+### `pip install -U flask-cors`
+Move the helper folder into the api folder
+### `pip install RPi.GPIO`
+### `pip install spidev`
+
+## Installing The Tile Server
+
+To install Docker
+### `curl -fsSL https://get.docker.com -o get-docker.sh`
+### `sudo sh get-docker.sh`
+### `sudo usermod -aG docker pi`
+### `sudo chmod 666 /var/run/docker.sock`
+
+Then run:
+### `docker pull tburnside/tileserver-gl-arm:1`
+
+## Running the Program
+Open 3 terminals all in the FighterMonitor folder
+
+Terminal 1: Tile Server
+
+### `cd maps`
+### `docker run --rm -it -v $(pwd):/data -p 8080:80 tburnside/tileserver-gl-arm:1`
+
+Terminal 2: Flask Backend
+
+### `cd api`
+### `source ./venv/bin/activate`
+### `python3 api.py`
+
+Terminal 3: Node Frontend
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

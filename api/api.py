@@ -9,13 +9,17 @@ from datetime import datetime
 import csv
 from multiprocessing import Process, Value
 
+## This file handles all stored data. It stores and serves firefighter class objects as well as handling LoRa transmission and Impedence calculations
+
+
+
 
 app = Flask(__name__)
 CORS(app)
 
 
 
-
+## This function calculates hydration based on age height weight and sex and impednece 
 
 def impCalc(age_s, height_s, weight_s,sex_s, trueImp_s):
     age = float(age_s)
@@ -35,10 +39,9 @@ def impCalc(age_s, height_s, weight_s,sex_s, trueImp_s):
 
     
 
-#########################################lora 
-
+####### LoRa Scripts start Here #######
+#RJ needs to comment this
 BOARD.setup()
-
 
 def write_to_csv(payload):
     word = payload.split()
@@ -86,6 +89,12 @@ class LoRaRcvCont(LoRa):
         self.set_mode(MODE.SLEEP)
         self.set_dio_mapping([0] * 6)
         self.set_freq(434.0)
+        #self.set_coding_rate(1)
+        self.set_bw(7)
+        self.set_spreading_factor(11)
+        self.set_ocp_trim(240)
+        self.set_agc_auto_on(0)
+        self.set_lna(4,3)
 
     def start(self):
         self.reset_ptr_rx()
@@ -156,11 +165,11 @@ def loraProcess():
 
 
 
-###############################################
+####### LoRa Scripts end Here #######
 
 
 
-
+## Configuring database
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///fighters.db"
 db = SQLAlchemy(app)
@@ -179,7 +188,7 @@ class Fighter(db.Model):
     sex = db.Column(db.Text, nullable=True)
     name = db.Column(db.Text, nullable=True)
 
-#change these to firefighter attributes
+
     def __str__(self):
         return f'{self.id}{self.hydration}{self.oxygen}{self.heartrate}{self.floor}{self.latitude}{self.longitude}{self.map}{self.age}{self.weight}{self.height}{self.sex}{self.name}'
 
@@ -200,7 +209,8 @@ def fighterSerializer(fighter):
         "sex": fighter.sex,
         "name": fighter.name
     }
-#read firefighter route
+
+#read firefighters route
 @app.route('/api/', methods=['GET'])
 def index():
     return jsonify([*map(fighterSerializer,Fighter.query.all())])
@@ -217,6 +227,7 @@ def create():
     db.session.commit()
     return {'201': "Fighter added successfully!" }
 
+#read one firefighter route
 @app.route('/api/<int:id>')
 def show(id):
     return jsonify([*map(fighterSerializer,Fighter.query.filter_by(id=id))])
