@@ -1,8 +1,9 @@
 import React from "react";
 import Popup from "./Popup";
 import {useState} from 'react'
-import '../../App.css'
-
+import '../../App.css' 
+import 'react-dropdown/style.css';
+import DropdownComp from "./Dropdown";
 /*
 This component handles the user input to store firefighters. uses backend requests to create new fighters.
 
@@ -11,7 +12,7 @@ Form is contained within the popup component
 
 
 export const Form = ({userInput, userAge, userWeight, userHeight, userSex, onFormAge, onFormHeight, onFormWeight, onFormSex,  onFormChange, onFormSubmit})=> {
-
+    
     const handleChange =(event) => {
         onFormChange(event.target.value)
     }
@@ -26,11 +27,6 @@ export const Form = ({userInput, userAge, userWeight, userHeight, userSex, onFor
     const handleWeight =(event) => {
         onFormWeight(event.target.value)
     }
-    const handleSex =(event) => {
-        onFormSex(event.target.value)
-    }
-
-
     const handleSubmit = (event) => {
         event.preventDefault()
         onFormSubmit()
@@ -38,7 +34,6 @@ export const Form = ({userInput, userAge, userWeight, userHeight, userSex, onFor
     }
 
     const [buttonPopup, setButtonPopup] = useState(false);
-
     return(
     <>
         <div id="buttonContainer">
@@ -58,9 +53,8 @@ export const Form = ({userInput, userAge, userWeight, userHeight, userSex, onFor
             <label htmlFor = "weight">Weight (lbs)</label>
             <input id = "addinput"  type="text"required value = {userWeight} onChange={handleWeight}name ="weight"></input> <br/><br/>
 
-            <label htmlFor = "sex">Sex</label>
-            <input id = "addinput" type="text"required value = {userSex} onChange={handleSex} name ="sex"></input> <br/><br/>
-
+            <label htmlFor = "sex">Sex</label> <br/>
+            <DropdownComp sex={userSex} onFormSexDrop = {onFormSex}/>
             <input id="submit" type="submit"></input>
         </form>
         </Popup>
