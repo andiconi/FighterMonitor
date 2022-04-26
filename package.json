@@ -1,40 +1,63 @@
 {
   "name": "firefightermonitor",
+  "description": "A Graphical User interface to track first responders in the field",
   "version": "0.1.0",
   "private": true,
+  "main": "main.js",
   "allowedHosts": "all",
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "electron-builder": "^23.0.3",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "electron": "^18.1.0",
     "nth-check": ">=2.0.1"
   },
+  "build": {
+    "icon": "./public/favicon.ico",
+    "appId": "Fighter Monitor",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    
+    "files": [
+      "./main.js"
+    ]
+    
+  },
   "dependencies": {
-    "@popperjs/core": "^2.11.5",
-    "@testing-library/jest-dom": "^5.16.3",
+    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "canvas": "^2.9.1",
-    "http-proxy-middleware": "^2.0.4",
-    "leaflet": "^1.7.1",
-    "leaflet-tilelayer-mbtiles-ts": "^1.5.8",
-    "mapbox-gl": "^2.8.1",
-    "mbtiles-serve": "^1.0.4",
-    "node-pre-gyp": "^0.17.0",
+    "@testing-library/user-event": "^14.1.1",
+    "concurrently": "^7.1.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "http-proxy-middleware": "^2.0.6",
+    "leaflet": "^1.8.0",
     "nth-check": ">=2.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-dropdown": "^1.9.2",
-    "react-router": "^6.2.2",
-    "react-router-dom": "^6.2.2",
-    "react-scripts": "5.0.0",
-    "sharp": "^0.20.8",
-    "sqlite3": "^5.0.4",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
     "typescript": "^4.6.3",
+    "wait-on": "^6.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start ",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-package": "./node_modules/.bin/electron-builder -c.extraMetadata.main=build/main.js",
+    "preelectron-package": "npm run build",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "eslintConfig": {
     "extends": [
@@ -53,5 +76,32 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "firefightermonitor"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }

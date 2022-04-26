@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Card} from '../Components/Card/card';
 import { Form } from '../Components/Form/form';
-
+import './MonitorPage.css'
 /*
 This Page is the main page with ll the cards. this is alos where firefighters are updated
 */
@@ -89,9 +89,7 @@ export const MonitorPage = ()=> {
         
         onFormSubmit ={handleFormSubmit}/>
 
-        {fireFighter.length > 0 &&
-            <Card listOfFighters={fireFighter}/>
-        }
+        {fireFighter.length > 0 ? <Card listOfFighters={fireFighter}/> : <div id = "noUsers">Add a Fireman</div>}
         
         </>
     )

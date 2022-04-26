@@ -1,7 +1,7 @@
 import React from "react";
 import {MapComp} from "../Map/MapComp"
 import '../../App.css'
-import {Link} from "react-router-dom"
+import { Delete } from "../Delete/Delete";
 /*
 This component creates cards given a list of firefighters
 
@@ -28,6 +28,7 @@ export const Card = ({listOfFighters})=> {
             </div>
             <div className="card__info">
               <div>{fireFighter.name}</div>
+              <Delete id = {fireFighter.id}></Delete>
             </div>
           </div>
         ))}

@@ -232,7 +232,13 @@ def create():
 def show(id):
     return jsonify([*map(fighterSerializer,Fighter.query.filter_by(id=id))])
 
+@app.route('/api/<int:id>', methods = ['POST'])
+def delete(id):
+    request_data = json.loads(request.data)
+    Fighter.query.filter_by(id=request_data['id']).delete()
+    db.session.commit()
 
+    return {'204': 'Deleted successfully'}
 
 if __name__ == '__main__':
     p = Process(target=loraProcess)

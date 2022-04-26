@@ -3,8 +3,8 @@ import '../../App.css'
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const markers = ["markers"];
-const maps = ["maps"];
+const markers = {};
+export const maps = {};
 
 /*
 This component loads the maps from the tile server
@@ -19,9 +19,10 @@ export const MapComp = ({Fighter})=> {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           maxZoom: 18,
           }).addTo(map);
-          maps.push(map);
+
+          maps[Fighter.id] = map;
           var marker;
-          markers.push(marker);
+          markers[Fighter.id] = marker
 
           markers[Fighter.id] = L.marker([Number(Fighter.latitude), Number(Fighter.longitude)],{
             color: 'red'
