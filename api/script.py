@@ -3,19 +3,19 @@ from api import db
 
 db.create_all()
 from api import Fighter
-fighter = Fighter(hydration = "58", oxygen = "99", heartrate = "73", floor = "1", latitude = "39.68011", longitude = "-75.75111", map = "map1", name = "Ben Weinel", age = "21", height = "72", weight = "200", sex = "male")
+fighter = Fighter(hydration = "58", oxygen = "99", heartrate = "73", floor = "1", latitude = "39.68011", longitude = "-75.75111", map = "map1", name = "Ben Weinel", age = "21", height = "72", weight = "200", sex = "male", deviceLink = "3426")
 db.session.add(fighter)
 db.session.commit()
 
-fighter1 = Fighter(hydration = "62", oxygen = "99", heartrate = "68", floor = "3", latitude = "39.68022", longitude = "-75.75122", map = "map2", name = "RJ Dawson", age = "22", height = "71", weight = "180", sex = "male")
+fighter1 = Fighter(hydration = "62", oxygen = "99", heartrate = "68", floor = "3", latitude = "39.68022", longitude = "-75.75122", map = "map2", name = "RJ Dawson", age = "22", height = "71", weight = "180", sex = "male", deviceLink = "7543")
 db.session.add(fighter1)
 db.session.commit()
 
-fighter2 = Fighter(hydration = "60", oxygen = "100", heartrate = "75", floor = "3", latitude = "39.68033", longitude = "-75.75133", map = "map3", name = "Will Shahan", age = "22", height = "70", weight = "190", sex = "male")
+fighter2 = Fighter(hydration = "60", oxygen = "100", heartrate = "75", floor = "3", latitude = "39.68033", longitude = "-75.75133", map = "map3", name = "Will Shahan", age = "22", height = "70", weight = "190", sex = "male", deviceLink = "9873")
 db.session.add(fighter2)
 db.session.commit()
 
-fighter3 = Fighter(hydration = "59", oxygen = "98", heartrate = "76", floor = "2", latitude = "39.68044", longitude = "-75.75144", map = "map4", name = "Shell Shetti", age = "21", height = "70", weight = "200", sex = "male")
+fighter3 = Fighter(hydration = "59", oxygen = "98", heartrate = "76", floor = "2", latitude = "39.68044", longitude = "-75.75144", map = "map4", name = "Shell Shetti", age = "21", height = "70", weight = "200", sex = "male", deviceLink = "9934")
 db.session.add(fighter3)
 db.session.commit()
 

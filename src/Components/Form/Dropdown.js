@@ -20,6 +20,7 @@ class DropdownComp extends React.Component {
     render() {
       return (
             <select id="dropdown" value={this.state.value} onChange={this.handleChange}>
+              <option value="" disabled selected>Select Your Sex</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
             </select>

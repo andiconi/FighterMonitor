@@ -28,14 +28,14 @@ def impCalc(age_s, height_s, weight_s,sex_s, trueImp_s):
     trueImp = float(trueImp_s)
     height = (height_in*2.54)
     weight = weight_lb/2.205
-    FFM = (1.31 + ((0.61*(pow(height,2)))/(trueImp))+(0.25*weight))
-    TBW_M = (2.447 - (0.09516*age) + (0.1074*height) + (0.3362*weight))
-    TBW_F = (-2.097 + (0.1069*height) + (0.2466*weight))
+    #FFM = (1.31 + ((0.61*(pow(height,2)))/(trueImp))+(0.25*weight))
+    TBW_M = (8.399 + (0.396*pow(height,2))/(trueImp) + (0.143*weight))
+    TBW_F = (8.315 + (0.382*pow(height,2))/(trueImp) + (0.105*weight))
 
     if(sex_s.lower() == "male"):
-        return str((TBW_M/FFM)*100).split(".")[0]
+        return str((TBW_M/weight)*100).split(".")[0]
     else:
-        return str((TBW_F/FFM)*100).split(".")[0]
+        return str((TBW_F/weight)*100).split(".")[0]
 
     
 
@@ -187,10 +187,11 @@ class Fighter(db.Model):
     height = db.Column(db.Text, nullable=True)
     sex = db.Column(db.Text, nullable=True)
     name = db.Column(db.Text, nullable=True)
+    deviceLink = db.Column(db.Text, nullable=True)
 
 
     def __str__(self):
-        return f'{self.id}{self.hydration}{self.oxygen}{self.heartrate}{self.floor}{self.latitude}{self.longitude}{self.map}{self.age}{self.weight}{self.height}{self.sex}{self.name}'
+        return f'{self.id}{self.hydration}{self.oxygen}{self.heartrate}{self.floor}{self.latitude}{self.longitude}{self.map}{self.age}{self.weight}{self.height}{self.sex}{self.name}{self.deviceLink}'
 
 
 def fighterSerializer(fighter):
@@ -207,7 +208,8 @@ def fighterSerializer(fighter):
         "weight": fighter.weight,
         "height": fighter.height,
         "sex": fighter.sex,
-        "name": fighter.name
+        "name": fighter.name,
+        "deviceLink": fighter.deviceLink
     }
 
 #read firefighters route
@@ -220,7 +222,7 @@ def index():
 @app.route('/api/create/', methods = ['POST'])
 def create():
     request_data = json.loads(request.data)
-    fighter = Fighter(name = request_data['name'], age = request_data['age'], height = request_data['height'], weight = request_data['weight'], sex = request_data['sex'])
+    fighter = Fighter(name = request_data['name'], age = request_data['age'], height = request_data['height'], weight = request_data['weight'], sex = request_data['sex'], deviceLink = request_data['deviceLink'] )
     db.session.add(fighter)
     db.session.commit()
     fighter.map = ("map" + str(fighter.id))

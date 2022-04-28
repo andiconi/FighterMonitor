@@ -18,7 +18,6 @@ wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 #### Restart the terminal and then run:
 ```
 nvm install v16.14.2
-cd maps
 ```
 #### This will install the necessary npm versions the GUI
 ```
@@ -31,6 +30,7 @@ npm install
 ```
 cd api
 sudo pip install virtualenv
+virtualenv -p python3 venv
 ```
 #### To activate the virtual enviorment:
 ```
@@ -46,9 +46,6 @@ source ./venv/bin/activate
 ```
 pip install -U Flask-SQLAlchemy
 pip install -U flask-cors
-```
-#### Move the helper folder into the api folder
-```
 pip install RPi.GPIO
 pip install spidev
 ```

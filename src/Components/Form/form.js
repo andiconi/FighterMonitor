@@ -11,7 +11,7 @@ Form is contained within the popup component
 */
 
 
-export const Form = ({userInput, userAge, userWeight, userHeight, userSex, onFormAge, onFormHeight, onFormWeight, onFormSex,  onFormChange, onFormSubmit})=> {
+export const Form = ({userInput, userAge, userWeight, userHeight, userSex, userDeviceLink, onFormAge, onFormHeight, onFormWeight, onFormSex, onDeviceLink,  onFormChange, onFormSubmit})=> {
     
     const handleChange =(event) => {
         onFormChange(event.target.value)
@@ -27,6 +27,9 @@ export const Form = ({userInput, userAge, userWeight, userHeight, userSex, onFor
     const handleWeight =(event) => {
         onFormWeight(event.target.value)
     }
+    const handleDeviceLink =(event) => {
+        onDeviceLink(event.target.value)
+    }
     const handleSubmit = (event) => {
         event.preventDefault()
         onFormSubmit()
@@ -37,23 +40,16 @@ export const Form = ({userInput, userAge, userWeight, userHeight, userSex, onFor
     return(
     <>
         <div id="buttonContainer">
-            <button id="button" onClick = {()=> setButtonPopup(true) }>Add Fireman</button>
+            <button id="button" onClick = {()=> setButtonPopup(true) }>Add Device</button>
         </div>
         <Popup id = "popupWindow" trigger = {buttonPopup} setTrigger = {setButtonPopup}>
+        <div id = "popupLabel">Add Device</div>
         <form id = "addPopup" onSubmit ={handleSubmit} >
-            <label htmlFor = "name">Name</label>
-            <input id = "addinput" type="text" required value = {userInput} onChange={handleChange}name ="name"></input> <br/><br/>
-
-            <label htmlFor = "age">Age</label>
-            <input id = "addinput"  type="text"required value = {userAge} onChange={handleAge}name ="age"></input> <br/><br/>
-
-            <label htmlFor = "height">Height (in)</label>
-            <input id = "addinput" type="text"required value = {userHeight} onChange={handleHeight}name ="height"></input> <br/><br/>
-
-            <label htmlFor = "weight">Weight (lbs)</label>
-            <input id = "addinput"  type="text"required value = {userWeight} onChange={handleWeight}name ="weight"></input> <br/><br/>
-
-            <label htmlFor = "sex">Sex</label> <br/>
+            <input id = "addinput" type="text" required value = {userInput} onChange={handleChange}name ="name" placeholder="Please enter your name"></input> <br/><br/>
+            <input id = "addinput"  type="text"required value = {userAge} onChange={handleAge}name ="age" placeholder="Please enter your age"></input> <br/><br/>
+            <input id = "addinput" type="text"required value = {userHeight} onChange={handleHeight}name ="height" placeholder="Please enter your height (inches)"></input> <br/><br/>
+            <input id = "addinput"  type="text"required value = {userWeight} onChange={handleWeight}name ="weight" placeholder="Please enter your weight (lbs)"></input> <br/><br/>
+            <input id = "addinput"  type="text"required value = {userDeviceLink} onChange={handleDeviceLink}name ="deviceLink" placeholder="Please enter the Device ID"></input> <br/><br/>
             <DropdownComp sex={userSex} onFormSexDrop = {onFormSex}/>
             <input id="submit" type="submit"></input>
         </form>

@@ -27,7 +27,8 @@ export const Card = ({listOfFighters})=> {
               </p>
             </div>
             <div className="card__info">
-              <div>{fireFighter.name}</div>
+              <div>{fireFighter.name} </div>
+              <div id = "deviceID"> Device ID: {fireFighter.deviceLink}</div>
               <Delete id = {fireFighter.id}></Delete>
             </div>
           </div>

@@ -12,6 +12,7 @@ export const MonitorPage = ()=> {
     const [addHeight, setaddHeight] = useState('')
     const [addWeight, setaddWeight] = useState('')
     const [addSex, setaddSex] = useState('')
+    const [addDeviceLink, setaddDeviceLink] = useState('')
     
     useEffect(()=>{
         getLatestFighters();
@@ -39,7 +40,9 @@ export const MonitorPage = ()=> {
     const handleFormChangeSex =(inputValue) => {
         setaddSex(inputValue)
     }
-
+    const handleFormChangeDeviceLink =(inputValue) => {
+        setaddDeviceLink(inputValue)
+    }
 
     const getLatestFighters = () => {
         fetch('/api/').then(response => {
@@ -59,7 +62,8 @@ export const MonitorPage = ()=> {
                 age: addAge,
                 height: addHeight,
                 weight: addWeight,
-                sex: addSex
+                sex: addSex,
+                deviceLink: addDeviceLink
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -72,6 +76,7 @@ export const MonitorPage = ()=> {
             setaddHeight('')
             setaddWeight('')
             setaddSex('')
+            setaddDeviceLink('')
             getLatestFighters()
             })
     }
@@ -85,6 +90,7 @@ export const MonitorPage = ()=> {
         userHeight={addHeight} onFormHeight = {handleFormChangeHeight}
         userWeight={addWeight} onFormWeight = {handleFormChangeWeight}
         userSex={addSex} onFormSex = {handleFormChangeSex}
+        userDeviceLink={addDeviceLink} onDeviceLink = {handleFormChangeDeviceLink}
         
         
         onFormSubmit ={handleFormSubmit}/>
