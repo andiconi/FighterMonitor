@@ -30,8 +30,11 @@ export const MapComp = ({Fighter})=> {
     }
 
     function updateMap(){
-        markers[Fighter.id].setLatLng(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude))).update();
-        maps[Fighter.id].setView(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude)));
+        if(markers[Fighter.id] != undefined){
+            markers[Fighter.id].setLatLng(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude))).update();
+            maps[Fighter.id].setView(L.latLng(Number(Fighter.latitude), Number(Fighter.longitude)));
+        }
+
     }
 
 //This useEffect creates the maps once on boot to avoid "Map container already initialized" errors
