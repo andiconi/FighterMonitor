@@ -46,10 +46,10 @@ export const Form = ({userInput, userAge, userWeight, userHeight, userSex, userD
         <div id = "popupLabel">Add Device</div>
         <form id = "addPopup" onSubmit ={handleSubmit} >
             <input id = "addinput" type="text" required value = {userInput} onChange={handleChange}name ="name" placeholder="Please enter your name"></input> <br/><br/>
-            <input id = "addinput"  type="text"required value = {userAge} onChange={handleAge}name ="age" placeholder="Please enter your age"></input> <br/><br/>
-            <input id = "addinput" type="text"required value = {userHeight} onChange={handleHeight}name ="height" placeholder="Please enter your height (inches)"></input> <br/><br/>
-            <input id = "addinput"  type="text"required value = {userWeight} onChange={handleWeight}name ="weight" placeholder="Please enter your weight (lbs)"></input> <br/><br/>
-            <input id = "addinput"  type="text"required value = {userDeviceLink} onChange={handleDeviceLink}name ="deviceLink" placeholder="Please enter the Device ID"></input> <br/><br/>
+            <input id = "addinput"  type="number"required value = {userAge} onChange={handleAge}name ="age" placeholder="Please enter your age"></input> <br/><br/>
+            <input id = "addinput" type="number"required value = {userHeight} onChange={handleHeight}name ="height" placeholder="Please enter your height (inches)"></input> <br/><br/>
+            <input id = "addinput"  type="number"required value = {userWeight} onChange={handleWeight}name ="weight" placeholder="Please enter your weight (lbs)"></input> <br/><br/>
+            <input id = "addinput"  type="number"required value = {userDeviceLink} onChange={handleDeviceLink}name ="deviceLink" placeholder="Please enter the Device ID"></input> <br/><br/>
             <DropdownComp sex={userSex} onFormSexDrop = {onFormSex}/>
             <input id="submit" type="submit"></input>
         </form>
