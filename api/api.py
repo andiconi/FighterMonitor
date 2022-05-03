@@ -13,7 +13,6 @@ from multiprocessing import Process, Value
 
 
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -59,7 +58,7 @@ def write_to_csv(payload):
     word[5] = str(word[5])
     # csv data
     rows = [
-    {'counter': word[0],
+    {'ID': word[0],
     'lat': word[1],
     'long': word[2],
     'HR': word[3],
@@ -83,26 +82,32 @@ def format_data(data):
     word[5] = str(word[5])
     return word
 
-class LoRaRcvCont(LoRa):
+class LoRaPing(LoRa):
     def __init__(self, verbose=False):
-        super(LoRaRcvCont, self).__init__(verbose)
+        super(LoRaPing, self).__init__(verbose)
         self.set_mode(MODE.SLEEP)
-        self.set_dio_mapping([0] * 6)
+        self.set_pa_config(pa_select=1,max_power=15,output_power=10)
         self.set_freq(434.0)
-        #self.set_coding_rate(1)
+        #self.set_coding_rate(4)
         self.set_bw(7)
         self.set_spreading_factor(11)
         self.set_ocp_trim(240)
         self.set_agc_auto_on(0)
         self.set_lna(4,3)
 
-    def start(self):
-        self.reset_ptr_rx()
-        self.set_mode(MODE.RXCONT)
-        while True:
-            sleep(.5)
-            sys.stdout.flush()
+    def on_tx_done(self):
+        #print("in TX")
+        #self.set_mode(MODE.STDBY)
+        self.clear_irq_flags(TxDone=1) # clear txdone IRQ flag
 
+    
+    def on_rx_timeout(self):
+        #global isTimedout
+        #print("Timed out\n")
+        #isTimedout = True
+        #print(self.get_irq_flags())
+        self.clear_irq_flags(RxTimeout=1)
+    
     def on_rx_done(self):
         self.clear_irq_flags(RxDone=1)
         print("\nReceived: ")
@@ -112,7 +117,6 @@ class LoRaRcvCont(LoRa):
             newstr = format_data(payload)
             write_to_csv(payload)
             print(newstr)
-
             fighter1 = Fighter.query.filter_by(deviceLink=newstr[0]).first()
             fighter1.hydration = impCalc(fighter1.age, fighter1.height, fighter1.weight, fighter1.sex, newstr[5]) 
             fighter1.oxygen = newstr[4]
@@ -125,18 +129,40 @@ class LoRaRcvCont(LoRa):
             pass
         self.set_mode(MODE.SLEEP)
         self.reset_ptr_rx()
-        self.set_mode(MODE.RXCONT)
 
-
+def main():
+#global isTimedout
+    while True:
+        Ids = Fighter.query.order_by(Fighter.deviceLink).all()
+        for ID in Ids:
+            print(ID.deviceLink)
+            #wU = True
+            #print("\nIN MAIN")
+            #print(lora.get_irq_flags())
+            data = [int(hex(ord(c)), 0) for c in ID.deviceLink] 
+            #print("pinging: " + ID.deviceLink)
+            lora.write_payload(data)
+            lora.set_mode(MODE.TX)
+            lora.set_dio_mapping([0] * 6) 
+            lora.set_mode(MODE.RXSINGLE) 
+            #while wU == True:
+            #    print(isTimedout)
+            #    if (isTimedout):
+            #        wU = False
+            #        print ("in if")
+            #        isTimedout = False
+            #    break
+            sys.stdout.flush()
+            sleep(2.1)
         
-lora = LoRaRcvCont(verbose=False)
+lora = LoRaPing(verbose=False)
 lora.set_mode(MODE.STDBY)
 lora.set_pa_config(pa_select=1)
 
 date = datetime.now().strftime("%Y_%m_%d-%I.%M.%S_%p")
 extension = ".csv"
 filename = "firefighter1_" + str(date) + extension
-fieldnames = ['counter', 'lat', 'long','HR',"SP02","Impedance"]
+fieldnames = ['ID', 'lat', 'long','HR',"SP02","Impedance"]
 f1 = open(filename, "w", encoding='UTF8', newline='')
 writer = csv.DictWriter(f1,fieldnames=fieldnames)
    
@@ -144,7 +170,7 @@ writer = csv.DictWriter(f1,fieldnames=fieldnames)
 def loraProcess():
     try:
         writer.writeheader()
-        lora.start()
+        main()
         
     except KeyboardInterrupt:
         f1.close()
