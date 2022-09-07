@@ -1,5 +1,5 @@
 # FireFighter Monitor
-
+![Alt text](gui.png?raw=true "Optional Title")
 This project connects a LoRa recieve script for the raspberry pi with a React GUI to display the location and vitals of firefighters or other first responders.
 Wearable side available here: https://github.com/rjdawson1/Fighter-Wearable.git
 ## Install
